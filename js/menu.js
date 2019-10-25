@@ -2,13 +2,10 @@
  * Displays a game menu
  * use game.state.start('level') to go levelState
  */
-
-var game = new Phaser.Game(1920, 1080, Phaser.CANVAS, 'game-world');
-
 var menuState = {
   create: function() {
     // create the scene
-    game.add.sprite(0, 0, 'bg');
+    game.add.image(0, 0, 'menuScreen');
   },
 
   // this is how you write a function
