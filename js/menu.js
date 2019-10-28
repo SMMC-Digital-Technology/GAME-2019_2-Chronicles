@@ -5,7 +5,11 @@
 var menuState = {
   create: function() {
     // create the scene
-    game.add.image(0, 0, 'menuScreen');
+    menuScreen = game.add.image(0, 0, 'menuScreen');
+    //menuScreen.scale.setTo(0.75, 0.8)
+    menuScreen.width = window.innerWidth;
+    menuScreen.height = window.innerHeight;
+
   },
 
   // this is how you write a function
