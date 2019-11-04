@@ -7,8 +7,9 @@
  */
 var levelState = {
   create: function() {
-    // create the level
-    game.add.sprite(0, 0, 'bg');
+kill.background;
+
+
   },
 
   update: function() {

@@ -5,11 +5,13 @@ var loadState = {
   preload: function() {
     loadingLabel = game.add.text(80, 150, 'Booting the DOT game engine', {
       font: '30px Courier',
-      fill: '#ffffff'
+      fill: '#15000'
     });
 
     // load all assets
     game.load.image('menuScreen', 'assets/menuScreen.png');
+    game.load.image('rangeStat', 'assets/rangeCh.png');
+
   },
 
   create: function() {
