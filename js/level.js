@@ -2,9 +2,11 @@
 var levelState = {
   create: function() {
   plantMap = game.add.image(0, 0, 'plantMap');
-  rangeStat = game.add.sprite(50, 100, 'rangeCh');
+  rangeStat = game.add.sprite(50, 100, 'hey guys i dont know how to make it one frame can you help');
   batStat = game.add.sprite(100, 100, 'batCh');
-    cursors = game.input.keyboard.createCursorKeys();
+  monster = game.add.sprite(400, 400, 'plant');
+ pPlant = game.add.sprite('potPlant');
+  cursors = game.input.keyboard.createCursorKeys();
 a = game.input.keyboard.addKey(Phaser.KeyCode.A);
 d = game.input.keyboard.addKey(Phaser.KeyCode.D);
 one = game.input.keyboard.addKey(Phaser.KeyCode.ONE);
@@ -23,28 +25,38 @@ two = game.input.keyboard.addKey(Phaser.KeyCode.TWO);
     turnOverTwo = false;
     move1Logi = true;
     move2Logi = true;
-//    statButton = game.add.button(100, 750, 'range charicter');
-//    statButton.anchor.setTo(0.5,0.5);
-  },
+    monsterTurn = false;
 
-  update: function() {
-    turns = game.add.text(350, 400, 'Turn: 0', {
-      font: '30px Courier',
-      fill: '#10000'
-      });
-//    statText = game.add.text(statButton.x,statButton.y,'Range Charicter');
-//  statButton.onInputUp.add(moveStat)
+    pPlant = game.add.group();
+    pPlant.enableBody = true;
+    //i did copy this code but i know what it means it reapears untill i is increememnted to 10 :)
+    for (i = 0; i < 10; i++) {
+     plant = pPlant.create(i * 70, Math.random() * 800, 'potPlant');
+    }
+  },
+//player .x -thingy .x giveyou stuff hmmhmhm
+
+ update: function() {
+
+    turns = game.add.text(555, 1, 'Turn: 0', {
+    font: '30px Courier',
+      fill: '#860'
+    });
+
 if (one.isDown && move1Logi) {
   statMove = true;
   move1Logi = false;
-} else if (batMove) {
+}
+else if (batMove) {
   statMove = false;
+  turnOverOne = true;
 }
 if (two.isDown && move2Logi) {
   batMove = true;
   move2Logi = false;
 } else if (statMove) {
   batMove = false;
+  turnOverTwo = true;
 }
     rangeStat.body.velocity.x = 0;
     rangeStat.body.velocity.y = 0;
@@ -96,10 +108,13 @@ if (Math.pow (batStat.x - batStat.lastX2, 2) + Math.pow (batStat.y - batStat.las
 }
 
 if (turnOverOne == true && turnOverTwo == true) {
-  move1Logi = true;
-  move2Logi = true;
-     turnOverOne = false;
-     turnOverTwo = false;
+monsterTurn = true;
    }
-  },
+   if (monsterTurn) {
+     move1Logi = true;
+     move2Logi = true;
+        turnOverOne = false;
+        turnOverTwo = false;
+   }
+ },
 };
