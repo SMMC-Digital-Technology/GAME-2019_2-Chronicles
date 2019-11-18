@@ -32,11 +32,8 @@ var levelState = {
     for (i = 0; i < 17; i++) {
       plant = pPlant.create(i * 70, Math.random() * 400, 'potPlant');
     }
-    turnsT = game.add.text(555, 1, 'Turn: 0', {
-      font: '30px Courier',
-      fill: '#860'
-    });
   },
+<<<<<<< HEAD
 
  update: function() {
   dx = batstat.x - pPlant.x;
@@ -63,6 +60,36 @@ if (two.isDown && move2Logi) {
   batMove = false;
   turnOverTwo = true;
 }
+=======
+  //player .x -thingy .x giveyou stuff hmmmm
+
+  update: function() {
+    distance1 = (batStat.x - pPlant.x) + (batStat.y - pPlant.y)
+    turnsT = game.add.text(555, 1, 'Turn: 0', {
+      font: '30px Courier',
+      fill: '#860'
+    });
+    rangeStat.body.collideWorldBounds = true;
+    batStat.body.collideWorldBounds = true;
+    if (one.isDown && move1Logi) {
+      statMove = true;
+      move1Logi = false;
+      batStat.lastX2 = batStat.x;
+      batStat.lastY2 = batStat.y;
+    } else if (batMove) {
+      statMove = false;
+      turnOverOne = true;
+    }
+    if (two.isDown && move2Logi) {
+      batMove = true;
+      move2Logi = false;
+      rangeStat.lastX = rangeStat.x;
+      rangeStat.lastY = rangeStat.y;
+    } else if (statMove) {
+      batMove = false;
+      turnOverTwo = true;
+    }
+>>>>>>> e688bcbc2eaff77d3d256a7e4558327500e9f989
     rangeStat.body.velocity.x = 0;
     rangeStat.body.velocity.y = 0;
 
