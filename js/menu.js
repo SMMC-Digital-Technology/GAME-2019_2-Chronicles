@@ -8,20 +8,23 @@ var menuState = {
     // create the scene
     spacebar = game.input.keyboard.addKey(Phaser.KeyCode.SPACEBAR);
     menuScreen = game.add.image(0, 0, 'menuScreen');
-    startTemp = game.add.text(80, 150, 'press the spacebar', {
+
+
+    startText = game.add.text(500, 590, 'Press the spacebar to begin!', {
       font: '30px Courier',
       fill: '#15000'
     });
-    //menuScreen.scale.setTo(0.75, 0.8)
+    menuScreen.scale.setTo(0.75, 0.8)
     menuScreen.width = window.innerWidth;
     menuScreen.height = window.innerHeight;
+
 
   },
 
   update: function() {
-    if (spacebar.isDown){
-          game.state.start('level');
-       }
+    if (spacebar.isDown) {
+      game.state.start('level');
+    }
   },
 
   // this is how you write a function
