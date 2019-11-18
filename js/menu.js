@@ -10,13 +10,13 @@ var menuState = {
     menuScreen = game.add.image(0, 0, 'menuScreen');
 
 
-    startText = game.add.text(500, 590, 'Press the spacebar to begin!', {
+    startText = game.add.text(300, 500, 'Press the spacebar to begin!', {
       font: '30px Courier',
       fill: '#15000'
     });
     menuScreen.scale.setTo(0.75, 0.8)
-    menuScreen.width = window.innerWidth;
-    menuScreen.height = window.innerHeight;
+    menuScreen.width = 1100;
+    menuScreen.height = 700;
 
 
   },
