@@ -33,15 +33,16 @@ two = game.input.keyboard.addKey(Phaser.KeyCode.TWO);
     for (i = 0; i < 17; i++) {
      plant = pPlant.create(i * 70, Math.random() * 400, 'potPlant');
     }
-  },
-//player .x -thingy .x giveyou stuff hmmmm
-
- update: function() {
-distance1 = (batStat.x - pPlant.x) + (batStat.y - pPlant.y)
     turnsT = game.add.text(555, 1, 'Turn: 0', {
     font: '30px Courier',
       fill: '#860'
     });
+  },
+//player .x -thingy .x giveyou stuff hmmmm
+
+ update: function() {
+distance1 = Math.(batStat.x - pPlant.x) + (batStat.y - pPlant.y);
+
        rangeStat.body.collideWorldBounds = true;
        batStat.body.collideWorldBounds = true;
 if (one.isDown && move1Logi) {
@@ -80,7 +81,7 @@ if (two.isDown && move2Logi) {
             rangeStat.body.velocity.y = 60;
         }
     }
-    //howdy .point one. 12
+
 batStat.body.velocity.x = 0;
 batStat.body.velocity.y = 0;
 
