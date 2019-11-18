@@ -37,19 +37,13 @@ var levelState = {
       fill: '#860'
     });
   },
-  //player .x -thingy .x giveyou stuff hmmmm
-
-  update: function() {
-    distance1 = (batStat.x - pPlant.x) + (batStat.y - pPlant.y)
-
-  },
-//player .x -thingy .x giveyou stuff hmmmm
 
  update: function() {
-distance1 = Math.(batStat.x - pPlant.x) + (batStat.y - pPlant.y);
-
-       rangeStat.body.collideWorldBounds = true;
-       batStat.body.collideWorldBounds = true;
+  dx = batstat.x - pPlant.x;
+  dy = batstat.y - pPlant.y;
+  distance = Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2))
+ rangeStat.body.collideWorldBounds = true;
+ batStat.body.collideWorldBounds = true;
 if (one.isDown && move1Logi) {
   statMove = true;
   move1Logi = false;
@@ -86,7 +80,7 @@ if (two.isDown && move2Logi) {
         rangeStat.body.velocity.y = 60;
       }
     }
-    //howdy .point one. 12
+
     batStat.body.velocity.x = 0;
     batStat.body.velocity.y = 0;
 
@@ -120,10 +114,10 @@ if (two.isDown && move2Logi) {
     }
 
     if (turnOverOne == true && turnOverTwo == true) {
-      if (distance1 <= 100) {
-        monster.x = pPlant;
-        monster.Y = pPlant;
-        monsterTurn = true;
+      if (distance <= 100) {
+        monster.x = pPlant.x;
+        monster.Y = pPlant.y;
+      monsterTurn = true;
       }
     }
     if (monsterTurn) {
@@ -131,7 +125,8 @@ if (two.isDown && move2Logi) {
       move2Logi = true;
       turnOverOne = false;
       turnOverTwo = false;
-      turn += 1; //talk tomorow
+      monsterTurn = false;
+      turn += 1;
       turnsT.text = 'Turn: ' + turn;
     }
   },
