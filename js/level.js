@@ -26,26 +26,29 @@ two = game.input.keyboard.addKey(Phaser.KeyCode.TWO);
     move1Logi = true;
     move2Logi = true;
     monsterTurn = false;
-
+    turn = 0;
     pPlant = game.add.group();
     pPlant.enableBody = true;
     //i did copy this code but i know what it means it reapears untill i is increememnted to 10 :)
-    for (i = 0; i < 10; i++) {
-     plant = pPlant.create(i * 70, Math.random() * 800, 'potPlant');
+    for (i = 0; i < 17; i++) {
+     plant = pPlant.create(i * 70, Math.random() * 400, 'potPlant');
     }
   },
-//player .x -thingy .x giveyou stuff hmmhmhm
+//player .x -thingy .x giveyou stuff hmmmm
 
  update: function() {
-
-    turns = game.add.text(555, 1, 'Turn: 0', {
+distance1 = (batStat.x - pPlant.x) + (batStat.y - pPlant.y)
+    turnsT = game.add.text(555, 1, 'Turn: 0', {
     font: '30px Courier',
       fill: '#860'
     });
-
+       rangeStat.body.collideWorldBounds = true;
+       batStat.body.collideWorldBounds = true;
 if (one.isDown && move1Logi) {
   statMove = true;
   move1Logi = false;
+  batStat.lastX2 = batStat.x;
+  batStat.lastY2 = batStat.y;
 }
 else if (batMove) {
   statMove = false;
@@ -54,6 +57,8 @@ else if (batMove) {
 if (two.isDown && move2Logi) {
   batMove = true;
   move2Logi = false;
+  rangeStat.lastX = rangeStat.x;
+  rangeStat.lastY = rangeStat.y;
 } else if (statMove) {
   batMove = false;
   turnOverTwo = true;
@@ -75,6 +80,7 @@ if (two.isDown && move2Logi) {
             rangeStat.body.velocity.y = 60;
         }
     }
+    //howdy .point one. 12
 batStat.body.velocity.x = 0;
 batStat.body.velocity.y = 0;
 
@@ -108,13 +114,19 @@ if (Math.pow (batStat.x - batStat.lastX2, 2) + Math.pow (batStat.y - batStat.las
 }
 
 if (turnOverOne == true && turnOverTwo == true) {
-monsterTurn = true;
+  if (distance1 <= 100){
+    monster.x = pPlant;
+    monster.Y = pPlant;
+    monsterTurn = true;
+  }
    }
    if (monsterTurn) {
      move1Logi = true;
      move2Logi = true;
         turnOverOne = false;
         turnOverTwo = false;
+        turn += 1;//talk tomorow
+       turnsT.text = 'Turn: ' + turn;
    }
  },
 };
