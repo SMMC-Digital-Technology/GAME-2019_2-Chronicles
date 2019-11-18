@@ -2,47 +2,119 @@
 var levelState = {
   create: function() {
   plantMap = game.add.image(0, 0, 'plantMap');
-  rangeStat = game.add.sprite(50, 100, 'rangeCh');
-    cursors = game.input.keyboard.createCursorKeys();
+  rangeStat = game.add.sprite(50, 100, 'hey guys i dont know how to make it one frame can you help');
+  batStat = game.add.sprite(100, 100, 'batCh');
+  monster = game.add.sprite(400, 400, 'plant');
+ pPlant = game.add.sprite('potPlant');
+  cursors = game.input.keyboard.createCursorKeys();
 a = game.input.keyboard.addKey(Phaser.KeyCode.A);
 d = game.input.keyboard.addKey(Phaser.KeyCode.D);
+one = game.input.keyboard.addKey(Phaser.KeyCode.ONE);
+two = game.input.keyboard.addKey(Phaser.KeyCode.TWO);
    game.physics.arcade.enable(rangeStat);
+   game.physics.arcade.enable(batStat);
     rangeStat.lastX = rangeStat.x;
     rangeStat.lastY = rangeStat.y;
+    batStat.lastX2 = batStat.x;
+    batStat.lastY2 = batStat.y;
     rangeStat.maxMove = Math.pow(100, 2);
-  },
+    batStat.maxMove = Math.pow(100, 2);
+    statMove = false;
+    batMove = false;
+    turnOverOne = false;
+    turnOverTwo = false;
+    move1Logi = true;
+    move2Logi = true;
+    monsterTurn = false;
 
-  update: function() {
-      rangeStat.body.velocity.x = 0;
-      rangeStat.body.velocity.y = 0;
-    if(true){
-           if (cursors.left.isDown) {
+    pPlant = game.add.group();
+    pPlant.enableBody = true;
+    //i did copy this code but i know what it means it reapears untill i is increememnted to 10 :)
+    for (i = 0; i < 10; i++) {
+     plant = pPlant.create(i * 70, Math.random() * 800, 'potPlant');
+    }
+  },
+//player .x -thingy .x giveyou stuff hmmhmhm
+
+ update: function() {
+
+    turns = game.add.text(555, 1, 'Turn: 0', {
+    font: '30px Courier',
+      fill: '#860'
+    });
+
+if (one.isDown && move1Logi) {
+  statMove = true;
+  move1Logi = false;
+}
+else if (batMove) {
+  statMove = false;
+  turnOverOne = true;
+}
+if (two.isDown && move2Logi) {
+  batMove = true;
+  move2Logi = false;
+} else if (statMove) {
+  batMove = false;
+  turnOverTwo = true;
+}
+    rangeStat.body.velocity.x = 0;
+    rangeStat.body.velocity.y = 0;
+
+    if (statMove) {
+        if (cursors.left.isDown) {
             rangeStat.body.velocity.x = -60;
-         }
-          if (cursors.right.isDown) {
+        }
+        if (cursors.right.isDown) {
             rangeStat.body.velocity.x = 60;
-          }
-      if (cursors.up.isDown) {
-       rangeStat.body.velocity.y = -60;
+        }
+        if (cursors.up.isDown) {
+            rangeStat.body.velocity.y = -60;
+        }
+        if (cursors.down.isDown) {
+            rangeStat.body.velocity.y = 60;
+        }
+    }
+batStat.body.velocity.x = 0;
+batStat.body.velocity.y = 0;
+
+if (batMove) {
+    if (cursors.left.isDown) {
+        batStat.body.velocity.x = -60;
+    }
+    if (cursors.right.isDown) {
+        batStat.body.velocity.x = 60;
+    }
+    if (cursors.up.isDown) {
+        batStat.body.velocity.y = -60;
     }
     if (cursors.down.isDown) {
-       rangeStat.body.velocity.y = 60;
-     }
-
-if (Math.pow (rangeStat.x - rangeStat.lastX, 2) + Math.pow (rangeStat.y - rangeStat.lastY , 2)> rangeStat.maxMove){
-console.log('it works');
-rangeStat.lastX = rangeStat.x;
-rangeStat.lastY = rangeStat.y;
- }
-
+        batStat.body.velocity.y = 60;
     }
-  },
-  // this is how you write a function
-  // note the comma after the } above
-  // see that variables go in the brackets still
-  // to use this function in collision detection, write this.exampleFunction
-  // to call it manually, write this.exampleFunction(1, 2)
-  exampleFunction: function(something, somethingElse) {
 }
 
+
+if (Math.pow (rangeStat.x - rangeStat.lastX, 2) + Math.pow (rangeStat.y - rangeStat.lastY , 2)> rangeStat.maxMove) {
+  rangeStat.lastX = rangeStat.x;
+  rangeStat.lastY = rangeStat.y;
+  statMove = false;
+  turnOverOne = true;
+}
+if (Math.pow (batStat.x - batStat.lastX2, 2) + Math.pow (batStat.y - batStat.lastY2 , 2)> batStat.maxMove) {
+  batStat.lastX2 = batStat.x;
+  batStat.lastY2 = batStat.y;
+  batMove = false;
+  turnOverTwo = true;
+}
+
+if (turnOverOne == true && turnOverTwo == true) {
+monsterTurn = true;
+   }
+   if (monsterTurn) {
+     move1Logi = true;
+     move2Logi = true;
+        turnOverOne = false;
+        turnOverTwo = false;
+   }
+ },
 };

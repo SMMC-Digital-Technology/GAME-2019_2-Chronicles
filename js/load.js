@@ -10,8 +10,8 @@ var loadState = {
 
     // load all assets
     game.load.image('menuScreen', 'assets/menuScreen.png');
-    rangeStat = game.load.image('rangeStat', 'assets/rangeCh.png');
-
+  //  game.load.image('rangeCh', 'assets/rangeCh.png');
+    game.load.image('statButton','assets/button1.png');
   },
 
   create: function() {

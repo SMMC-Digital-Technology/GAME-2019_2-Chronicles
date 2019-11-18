@@ -8,7 +8,7 @@ game.state.add('level', levelState);
 game.state.add('gameover', gameoverState);
 
 game.global = {
-
+  turn: 1
 
    // set variables that travel between the states here
    // eg score = 0,
