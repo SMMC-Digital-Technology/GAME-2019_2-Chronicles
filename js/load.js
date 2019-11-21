@@ -8,11 +8,10 @@ var loadState = {
       fill: '#15000'
     });
 
-    // load all assets
+
     game.load.image('menuScreen', 'assets/menuScreen.png');
     game.load.image('rangeCh', 'assets/soccerball.png');
-    game.load.image('statButton','assets/button1.png');
-        game.load.image('bushes','assets/bush.png');
+    game.load.image('bush','assets/bush.png');
   },
 
   create: function() {
