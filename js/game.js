@@ -1,4 +1,4 @@
-var game = new Phaser.Game(1100, 700, Phaser.CANVAS, 'game-world');
+var game = new Phaser.Game(1100, 650, Phaser.CANVAS, 'game-world');
 
 game.state.add('boot', bootState);
 game.state.add('load', loadState);
@@ -8,7 +8,7 @@ game.state.add('level', levelState);
 game.state.add('gameover', gameoverState);
 
 game.global = {
-  turn: 1
+  turn: 1,
 
   // set variables that travel between the states here
   // eg score = 0,

@@ -12,6 +12,7 @@ var loadState = {
     game.load.image('menuScreen', 'assets/menuScreen.png');
     game.load.image('rangeCh', 'assets/soccerball.png');
     game.load.image('bush','assets/bush.png');
+    game.load.image('bg2','assets/BG2.png')
   },
 
   create: function() {
