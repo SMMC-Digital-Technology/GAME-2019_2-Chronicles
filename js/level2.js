@@ -4,6 +4,8 @@ var levelState = {
     rangeStat = game.add.sprite(1000, 100, 'rangeCh');
     batStat = game.add.sprite(100, 100, 'batCh');
     monster = game.add.sprite(400, 400, 'tf');
+    rangePlayer = game.add.sprite('hg');
+    batPlayer = game.add.sprite('hfjf');
     cursors = game.input.keyboard.createCursorKeys();
     a = game.input.keyboard.addKey(Phaser.KeyCode.A);
     d = game.input.keyboard.addKey(Phaser.KeyCode.D);
@@ -26,8 +28,6 @@ var levelState = {
     move2Logi = true;
     monsterTurn = false;
     fightingStart = true;
-    singlerun = true;
-    plantAlive = 25;
     turn = 0;
     batFight = false;
     statFight = false;
@@ -39,13 +39,12 @@ var levelState = {
     game.physics.arcade.enable(pPlant);
     //i did copy this code but i know what it means it reapears untill i is increememnted to 10 :)
     for (i = 0; i < 25; i++) {
-      plant = pPlant.create(i * 40, Math.random() * 600, 'bush');
+      plant = pPlant.create(i * 40, Math.random() * 700, 'bush');
     }
   },
 
  update: function() {
    if (statFight == false && batFight == false) {
-//  game.physics.arcade.overlap(batStat, plant, goodending, null, this);
    rangeStat.animations.add('role', [0, 1, 2, 3], true);
    rangeStat.animations.play('role');
  rangeStat.body.collideWorldBounds = true;
@@ -146,14 +145,12 @@ if (two.isDown && move2Logi) {
       rangeStat.body.velocity.y = 0;
      statFight = true;
      fighting = true;
-     bglog = true;
     }
     if (distance1 <= 50 && spacebar.isDown && batMove == true){
       batStat.body.velocity.x = 0;
       batStat.body.velocity.y = 0;
      batFight = true;
      fighting = true;
-     bglog = true;
     }
 
     if (turnOverOne == true && turnOverTwo == true) {
@@ -177,64 +174,25 @@ if (two.isDown && move2Logi) {
     }
    }
    if (fighting) {
+//     bglog = true;
+///     if (bglog) {
+  //   bg2 = game.add.sprite(0, 2, 'bg2');
+  //   bglog = false;
+  //  }
+    spike = game.add.group();
+    spike.enableBody = true;
+    game.physics.arcade.enable(spike);
     if (fightingStart){
-      spike = game.add.group();
-      spike.enableBody = true;
-      game.physics.arcade.enable(spike);
     for (o = 0; o < 25; o++) {
       spikes = pPlant.create(0, Math.random() * 650, 'spike');
       spikes.body.gravity.x = 10;
     }
       fightingStart = false;
     }
-    if (spikes.position.y == 650) {
+    if (spikes.y == 650) {
       fightingStart = true;
       console.log('jfjf');
     }
-    if (singlerun) {
-    if (statFight) {
-     player = game.add.sprite(1000, 325, 'rangeP');
-    }
-    if (batFight) {
-     player = game.add.sprite(1000, 325, 'batP');
-     }
-    monsterfight = game.add.sprite(0, 150, 'bigmonster');
-    monsterfight.scale.setTo(10, 10);
-     singlerun = false;
-    }
-    game.physics.arcade.enable(player);
-   rangeStat.body.collideWorldBounds = true;
-    player.body.velocity.x = 0;
-    player.body.velocity.y = 0;
-      if (cursors.left.isDown) {
-        player.body.velocity.x = -60;
-      }
-      if (cursors.right.isDown) {
-        player.body.velocity.x = 60;
-      }
-      if (cursors.up.isDown) {
-        player.body.velocity.y = -60;
-      }
-      if (cursors.down.isDown) {
-        player.body.velocity.y = 60;
-    }
-    playerPush = game.physics.arcade.collide(player, spikes);
-    if (false) {
-    if (batFight) {
-      batLife -= 25;
-    }
-    if (statFight) {
-      rangeLife -= 25;
-    }
-    spikes.kill();
-    }
    }
- },
-
-
-//  goodending: function() {
-//   plantAlive =- 1;
-//   if (plantAlive == 10) {
-//    game.state.start('level2');
-//   }
-};
+  },
+ };
