@@ -23,6 +23,8 @@ var levelState = {
     turnOverOne = false;
     turnOverTwo = false;
     player = false;
+    dead = false;
+    dead1 = false;
     move1Logi = true;
     move2Logi = true;
     monsterTurn = false;
@@ -187,34 +189,32 @@ if (two.isDown && move2Logi) {
       spike = game.add.group();
       spike.enableBody = true;
       game.physics.arcade.enable(spike);
+
     for (o = 0; o < 25; o++) {
-      spikes = pPlant.create(0, Math.random() * 650, 'spike');
+      spikes = spike.create(0, Math.random() * 650, 'spike');
       spikes.body.gravity.x = 10;
       }
       fightingStart = false;
     }
-    if (spikes.y == 640) {
-      fightingStart = true;
-      console.log('jfjf');
-    }
+
     if (ennemyAttack >= 1) {
       ennemyAttack -= 1;
     for (o = 0; o < 1; o++) {
-      spikes = pPlant.create(0, Math.random() * 650, 'spike');
+      spikes = spike.create(0, Math.random() * 650, 'spike');
       spikes.body.gravity.x = 60;
       }
     }
     if (ennemyAttack2 >= 1) {
       ennemyAttack2 -= 1;
     for (o = 0; o < 1; o++) {
-      spikes = pPlant.create(0, Math.random() * 650, 'spike');
+      spikes = spike.create(0, Math.random() * 650, 'spike');
       spikes.body.gravity.x = 20;
       }
     }
-
+     spikes = spike.getClosestTo(player);
     if (singlerun) {
-    if (statFight) {
-     player = game.add.sprite(1000, 325, 'rangeP');
+     if (statFight) {
+      player = game.add.sprite(1000, 325, 'rangeP');
     }
     if (batFight) {
      player = game.add.sprite(1000, 325, 'batP');
@@ -231,49 +231,75 @@ if (two.isDown && move2Logi) {
     player.body.velocity.x = 0;
     player.body.velocity.y = 0;
       if (cursors.left.isDown) {
-        player.body.velocity.x = -80;
+        player.body.velocity.x = -100;
       }
       if (cursors.right.isDown) {
-        player.body.velocity.x = 80;
+        player.body.velocity.x = 100;
       }
       if (cursors.up.isDown) {
-        player.body.velocity.y = -80;
+        player.body.velocity.y = -100;
       }
       if (cursors.down.isDown) {
-        player.body.velocity.y = 80;
+        player.body.velocity.y = 100;
     }
   }
+
+
 game.physics.arcade.collide(player, monsterfight, this.goodending, null, this);
+
+
 game.physics.arcade.collide(player, spikes, this.healthending, null, this);
 }
 
+if (dead1 == true && dead == true) {
+game.state.start('gameover');
+}
 
-//    if (spikes.x >= player.x && spikes.y == player.y) {
-  //  if (batFight) {
-  //    batLife -= 25;
-  //  }
-  //  if (statFight) {
-  //    rangeLife -= 25;
-  //   }
-  //   }
+   if (bigmonsterhealth == 0) {
+     menuScreen = game.add.image(0, 0, 'menuScreen');
+      moretext = game.add.text(300, 500, 'you win and the school is alive', {
+       font: '30px Courier',
+       fill: '#15000'
+     });
+   }
+
     if (theEnd == true) {
-      player = false;
+      ennemyAttack2 += 100;
+      ennemyAttack += 100;
+      fightingStart = true;
        statFight = false;
        batFight = false;
        fighting = false;
        singlerun = true;
+       theEnd = false;
+       monsterfight.kill();
+       player.kill();
        console.log('xcfg');
     }
 
  },
 healthending: function(player, spikes) {
      console.log('gr');
-
+if (statFight) {
+  rangeLife -= 25;
+}
+ if (rangeLife <= 0) {
+  dead = true;
+  theEnd = true;
+  rangeStat.kill();
+}
+if (batFight) {
+  batLife -= 25;
+}if (batLife == 0) {
+  dead1 = true;
+  theEnd = true;
+  batStat.kill();
+}
 },
 goodending: function(player, monsterfight) {
-     console.log('gg');
+     console.log('ggg');
      bigmonsterhealth -= 1;
-     
+     theEnd = true;
    },
 
 
@@ -291,6 +317,6 @@ goodendi: function(batStat, plant) {
 plantAlive -= 1;
 if (plantAlive == 10) {
 game.state.start('gameover');
-}
-},
+  }
+ },
 };
