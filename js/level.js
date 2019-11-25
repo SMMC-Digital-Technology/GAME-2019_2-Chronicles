@@ -2,7 +2,7 @@ var levelState = {
   create: function() {
     plantMap = game.add.image(0, 0, 'BG1');
     rangeStat = game.add.sprite(1000, 100, 'rangeCh');
-    batStat = game.add.sprite(100, 100, 'batCh');
+    batStat = game.add.sprite(100, 100, 'rangeCh');
     monster = game.add.sprite(400, 400, 'tf');
     cursors = game.input.keyboard.createCursorKeys();
     a = game.input.keyboard.addKey(Phaser.KeyCode.A);
@@ -22,12 +22,17 @@ var levelState = {
     batMove = false;
     turnOverOne = false;
     turnOverTwo = false;
+    player = false;
     move1Logi = true;
     move2Logi = true;
     monsterTurn = false;
     fightingStart = true;
     singlerun = true;
     plantAlive = 25;
+    ennemyAttack = 100;
+    ennemyAttack2 = 100;
+    theEnd = false;
+    bigmonsterhealth = 3;
     turn = 0;
     batFight = false;
     statFight = false;
@@ -37,6 +42,7 @@ var levelState = {
     pPlant = game.add.group();
     pPlant.enableBody = true;
     game.physics.arcade.enable(pPlant);
+       	game.stage.backgroundColor = '#124184';
     //i did copy this code but i know what it means it reapears untill i is increememnted to 10 :)
     for (i = 0; i < 25; i++) {
       plant = pPlant.create(i * 40, Math.random() * 600, 'bush');
@@ -123,9 +129,6 @@ if (two.isDown && move2Logi) {
       batMove = false;
       turnOverTwo = true;
     }
-
-
-
     dx = rangeStat.x - plant.x;
     dy = rangeStat.y - plant.y;
     distance1 = Math.abs(Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2)))
@@ -141,19 +144,19 @@ if (two.isDown && move2Logi) {
           plant = pPlant.getClosestTo(rangeStat);
     }
 
-    if (distance2 <= 60 && spacebar.isDown && statMove == true){
+    if (distance2 <= 40 && spacebar.isDown && statMove == true){
       rangeStat.body.velocity.x = 0;
       rangeStat.body.velocity.y = 0;
      statFight = true;
      fighting = true;
-     bglog = true;
+
     }
-    if (distance1 <= 50 && spacebar.isDown && batMove == true){
+    if (distance1 <= 40 && spacebar.isDown && batMove == true){
       batStat.body.velocity.x = 0;
       batStat.body.velocity.y = 0;
      batFight = true;
      fighting = true;
-     bglog = true;
+
     }
 
     if (turnOverOne == true && turnOverTwo == true) {
@@ -167,6 +170,8 @@ if (two.isDown && move2Logi) {
     monsterTurn = true;
     }
   }
+  game.physics.arcade.collide(rangeStat, plant, this.goodendin, null, this);
+  game.physics.arcade.collide(batStat, plant, this.goodendi, null, this);
     if (monsterTurn) {
       move1Logi = true;
       move2Logi = true;
@@ -176,6 +181,7 @@ if (two.isDown && move2Logi) {
       monsterTurn = false;
     }
    }
+
    if (fighting) {
     if (fightingStart){
       spike = game.add.group();
@@ -184,13 +190,28 @@ if (two.isDown && move2Logi) {
     for (o = 0; o < 25; o++) {
       spikes = pPlant.create(0, Math.random() * 650, 'spike');
       spikes.body.gravity.x = 10;
-    }
+      }
       fightingStart = false;
     }
-    if (spikes.position.y == 650) {
+    if (spikes.y == 640) {
       fightingStart = true;
       console.log('jfjf');
     }
+    if (ennemyAttack >= 1) {
+      ennemyAttack -= 1;
+    for (o = 0; o < 1; o++) {
+      spikes = pPlant.create(0, Math.random() * 650, 'spike');
+      spikes.body.gravity.x = 60;
+      }
+    }
+    if (ennemyAttack2 >= 1) {
+      ennemyAttack2 -= 1;
+    for (o = 0; o < 1; o++) {
+      spikes = pPlant.create(0, Math.random() * 650, 'spike');
+      spikes.body.gravity.x = 20;
+      }
+    }
+
     if (singlerun) {
     if (statFight) {
      player = game.add.sprite(1000, 325, 'rangeP');
@@ -202,39 +223,74 @@ if (two.isDown && move2Logi) {
     monsterfight.scale.setTo(10, 10);
      singlerun = false;
     }
+   game.physics.arcade.enable(monsterfight);
     game.physics.arcade.enable(player);
+       monsterfight.body.immovable = true;
    rangeStat.body.collideWorldBounds = true;
+   if (player) {
     player.body.velocity.x = 0;
     player.body.velocity.y = 0;
       if (cursors.left.isDown) {
-        player.body.velocity.x = -60;
+        player.body.velocity.x = -80;
       }
       if (cursors.right.isDown) {
-        player.body.velocity.x = 60;
+        player.body.velocity.x = 80;
       }
       if (cursors.up.isDown) {
-        player.body.velocity.y = -60;
+        player.body.velocity.y = -80;
       }
       if (cursors.down.isDown) {
-        player.body.velocity.y = 60;
+        player.body.velocity.y = 80;
     }
-    playerPush = game.physics.arcade.collide(player, spikes);
-    if (false) {
-    if (batFight) {
-      batLife -= 25;
+  }
+game.physics.arcade.collide(player, monsterfight, this.goodending, null, this);
+game.physics.arcade.collide(player, spikes, this.healthending, null, this);
+}
+
+
+//    if (spikes.x >= player.x && spikes.y == player.y) {
+  //  if (batFight) {
+  //    batLife -= 25;
+  //  }
+  //  if (statFight) {
+  //    rangeLife -= 25;
+  //   }
+  //   }
+    if (theEnd == true) {
+      player = false;
+       statFight = false;
+       batFight = false;
+       fighting = false;
+       singlerun = true;
+       console.log('xcfg');
     }
-    if (statFight) {
-      rangeLife -= 25;
-    }
-    spikes.kill();
-    }
-   }
+
  },
+healthending: function(player, spikes) {
+     console.log('gr');
+
+},
+goodending: function(player, monsterfight) {
+     console.log('gg');
+     bigmonsterhealth -= 1;
+     
+   },
 
 
-//  goodending: function() {
-//   plantAlive =- 1;
-//   if (plantAlive == 10) {
-//    game.state.start('level2');
-//   }
+  goodendin: function(rangeStat, plant) {
+       console.log('gg');
+       plant.kill();
+plantAlive -= 1;
+ if (plantAlive == 10) {
+game.state.start('gameover');
+}
+},
+goodendi: function(batStat, plant) {
+     console.log('gg');
+     plant.kill();
+plantAlive -= 1;
+if (plantAlive == 10) {
+game.state.start('gameover');
+}
+},
 };
