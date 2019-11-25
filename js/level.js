@@ -1,9 +1,9 @@
 var levelState = {
   create: function() {
-    plantMap = game.add.image(0, 0, 'BG1');
+    plantMap = game.add.sprite(0, 0, 'BG');
     rangeStat = game.add.sprite(1000, 100, 'rangeCh');
-    batStat = game.add.sprite(100, 100, 'rangeCh');
-    monster = game.add.sprite(400, 400, 'tf');
+    batStat = game.add.sprite(100, 100, 'bat');
+    monster = game.add.sprite(400, 400, 'monsters');
     cursors = game.input.keyboard.createCursorKeys();
     a = game.input.keyboard.addKey(Phaser.KeyCode.A);
     d = game.input.keyboard.addKey(Phaser.KeyCode.D);
@@ -44,7 +44,7 @@ var levelState = {
     pPlant = game.add.group();
     pPlant.enableBody = true;
     game.physics.arcade.enable(pPlant);
-       	game.stage.backgroundColor = '#124184';
+
     //i did copy this code but i know what it means it reapears untill i is increememnted to 10 :)
     for (i = 0; i < 25; i++) {
       plant = pPlant.create(i * 40, Math.random() * 600, 'bush');
@@ -214,12 +214,12 @@ if (two.isDown && move2Logi) {
      spikes = spike.getClosestTo(player);
     if (singlerun) {
      if (statFight) {
-      player = game.add.sprite(1000, 325, 'rangeP');
+      player = game.add.sprite(1000, 325, 'guy');
     }
     if (batFight) {
      player = game.add.sprite(1000, 325, 'batP');
      }
-    monsterfight = game.add.sprite(0, 150, 'bigmonster');
+    monsterfight = game.add.sprite(0, 150, 'monsters');
     monsterfight.scale.setTo(10, 10);
      singlerun = false;
     }
